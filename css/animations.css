@@ -1,0 +1,128 @@
+/* Advanced Animation Styles for Ultra-Smooth Experience */
+
+/* Mobile menu slide animation */
+#mobile-menu {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.4s var(--smooth-easing), 
+                opacity 0.4s var(--smooth-easing),
+                visibility 0.4s;
+    z-index: 40;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    padding: 1rem 0;
+}
+
+#mobile-menu.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+#mobile-menu.hidden {
+    display: none;
+}
+
+#mobile-menu a {
+    display: block;
+    padding: 1rem 1.5rem;
+    font-size: 17px;
+    color: var(--text-primary);
+    transition: all 0.3s var(--gentle-easing);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#mobile-menu a:hover {
+    background: rgba(0, 0, 0, 0.03);
+    padding-left: 2rem;
+}
+
+/* Hamburger animation */
+.hamburger-line {
+    transition: all 0.3s var(--smooth-easing);
+    transform-origin: center;
+}
+
+.hamburger.open .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translateY(7px);
+}
+
+.hamburger.open .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.open .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translateY(-7px);
+}
+
+/* Tab button press animation */
+.tab-button.pressing {
+    transform: scale(0.96) !important;
+    transition: transform 0.1s var(--gentle-easing) !important;
+}
+
+.tab-button.pressing::before {
+    width: 300px !important;
+    height: 300px !important;
+}
+
+/* Hero headline special gradient animation */
+.hero-headline h1 {
+    background: linear-gradient(135deg,
+        #A0522D 0%,
+        #C68642 25%,
+        #A0522D 50%,
+        #8B4513 75%,
+        #A0522D 100%);
+    background-size: 200% auto;
+    animation: heroShimmer 4s ease-in-out infinite;
+}
+
+@keyframes heroShimmer {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* Modal smooth scale animation */
+#modal {
+    transition: backdrop-filter 0.4s var(--smooth-easing);
+}
+
+#modal-content {
+    transform-origin: center;
+    transition: transform 0.5s var(--smooth-easing), 
+                opacity 0.5s var(--smooth-easing),
+                scale 0.5s var(--smooth-easing);
+}
+
+#modal.active #modal-content {
+    scale: 1;
+    opacity: 1;
+}
+
+/* Prevent body scroll when menu open */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Additional smooth hover for all clickable elements */
+button, a, .cursor-pointer {
+    transition: all 0.3s var(--smooth-easing);
+}
+
+/* Staggered reveal animation */
+.reveal-on-scroll:nth-child(1) { transition-delay: 0ms; }
+.reveal-on-scroll:nth-child(2) { transition-delay: 100ms; }
+.reveal-on-scroll:nth-child(3) { transition-delay: 200ms; }
+.reveal-on-scroll:nth-child(4) { transition-delay: 300ms; }
+.reveal-on-scroll:nth-child(5) { transition-delay: 400ms; }
+.reveal-on-scroll:nth-child(6) { transition-delay: 500ms; }

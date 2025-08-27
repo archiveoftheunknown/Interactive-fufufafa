@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velo - Fufufafa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-[#FDFBF8]">
+
+    <header id="beranda" class="sticky top-0 z-50 glass-effect">
+        <nav class="container mx-auto py-3 md:py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-lg md:text-xl font-bold text-[#3D3522]">Dossier Fufufafa</div>
+                <div class="hidden md:flex items-center space-x-8 relative">
+                    <div id="nav-pill" class="absolute bg-gray-200 rounded-full h-8 top-0 left-0 z-[-1] transition-all duration-500" style="--apple-easing;"></div>
+                    <a data-scroll-to="profil" class="nav-link text-gray-600 cursor-pointer px-3 py-1">Profil Akun</a>
+                    <a data-scroll-to="jejak" class="nav-link text-gray-600 cursor-pointer px-3 py-1">Jejak Digital</a>
+                    <a data-scroll-to="reaksi" class="nav-link text-gray-600 cursor-pointer px-3 py-1">Reaksi Politik</a>
+                    <a data-scroll-to="dampak" class="nav-link text-gray-600 cursor-pointer px-3 py-1">Dampak & Analisis</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="hamburger text-gray-600 focus:outline-none">
+                        <span class="hamburger-line block w-6 h-0.5 bg-gray-600 mb-1.5"></span>
+                        <span class="hamburger-line block w-6 h-0.5 bg-gray-600 mb-1.5"></span>
+                        <span class="hamburger-line block w-6 h-0.5 bg-gray-600"></span>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 flex flex-col space-y-2">
+                <a data-scroll-to="profil" class="nav-link text-gray-600 cursor-pointer py-2">Profil Akun</a>
+                <a data-scroll-to="jejak" class="nav-link text-gray-600 cursor-pointer py-2">Jejak Digital</a>
+                <a data-scroll-to="reaksi" class="nav-link text-gray-600 cursor-pointer py-2">Reaksi Politik</a>
+                <a data-scroll-to="dampak" class="nav-link text-gray-600 cursor-pointer py-2">Dampak & Analisis</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section text-center">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-[#3D3522] mb-4 fade-in-down">The Fufufafa Dossier</h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.3s;">Sebuah investigasi interaktif tentang hantu digital, aliansi politik, dan krisis kredibilitas yang membayangi pemerintahan baru Indonesia.</p>
+            </div>
+        </section>
+
+        <div class="container mx-auto">
+            <section id="profil" class="scroll-mt-20">
+                <div class="text-center mb-12 reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3D3522]">Profil Akun 'fufufafa'</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Di jantung kontroversi ini terdapat akun anonim di forum Kaskus yang aktif antara 2013-2019. Jejak digitalnya menunjukkan pola perilaku provokatif yang konsisten, membentuk profil yang meresahkan.</p>
+                </div>
+                <div class="max-w-4xl mx-auto reveal-on-scroll">
+                    <div class="flex justify-center mb-8 border-b border-gray-200">
+                        <button data-tab="politik" class="tab-button active text-sm md:text-base flex-1 py-3 px-4 font-semibold text-gray-500 bg-transparent rounded-t-lg">Serangan Politik</button>
+                        <button data-tab="seksual" class="tab-button text-sm md:text-base flex-1 py-3 px-4 font-semibold text-gray-500 bg-transparent rounded-t-lg">Pelecehan Seksual</button>
+                        <button data-tab="rasis" class="tab-button text-sm md:text-base flex-1 py-3 px-4 font-semibold text-gray-500 bg-transparent rounded-t-lg">Komentar Rasis</button>
+                    </div>
+                    <div id="tab-content" class="bg-white p-6 md:p-8 rounded-lg shadow-lg overflow-hidden">
+                        <div id="politik" class="tab-pane active">
+                            <h3 class="text-2xl font-semibold text-[#A0522D] mb-4">Serangan Politik Tertarget</h3>
+                            <p class="text-gray-700 mb-4">Fokus utama akun ini adalah serangan personal yang vitriolik terhadap Prabowo Subianto dan keluarganya, terutama selama Pilpres 2014 dan 2019 saat Prabowo menjadi rival politik ayah Gibran.</p>
+                            <div class="space-y-3 text-gray-600 italic border-l-4 border-[#D2B48C] pl-4">
+                                <p>"Istri cerai, Anak homo, Trus mau lebaran sama siapa?"</p>
+                                <p>"Tentara pecatan, cerai, anak melambai, pendukungnya radikal, partai koalisi gak all out mendukung"</p>
+                                <p>"Kasihan capres yg anaknya designer homo"</p>
+                            </div>
+                        </div>
+                        <div id="seksual" class="tab-pane hidden">
+                            <h3 class="text-2xl font-semibold text-[#A0522D] mb-4">Pelecehan Seksual & Misogini</h3>
+                            <p class="text-gray-700">Di luar politik, akun ini menunjukkan pola perilaku yang meresahkan terhadap figur publik perempuan, dengan banyak komentar bernada seksual dan melecehkan yang ditujukan kepada sejumlah selebriti.</p>
+                        </div>
+                        <div id="rasis" class="tab-pane hidden">
+                            <h3 class="text-2xl font-semibold text-[#A0522D] mb-4">Komentar Rasis & Ofensif</h3>
+                            <p class="text-gray-700">Pilar ketiga dari persona 'fufufafa' adalah penyebaran sentimen rasis. Akun tersebut ditemukan membuat komentar yang merendahkan terhadap berbagai kelompok, terutama masyarakat adat Papua Nugini.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <hr class="border-gray-200 my-16 reveal-on-scroll">
+
+            <section id="jejak" class="scroll-mt-20">
+                <div class="text-center mb-12 reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3D3522]">Membuka Jejak Digital</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Identitas di balik 'fufufafa' terungkap bukan dari satu penemuan, melainkan akumulasi jejak digital yang saling terkait. Klik setiap kartu untuk melihat detail bukti.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                    <div class="evidence-card bg-white p-6 rounded-lg shadow-lg cursor-pointer reveal-on-scroll" data-modal="modal1">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU1RWbu5x0cYokbv8j6bZpL_CndBn2vyi2QQ&s" alt="Unggahan Paralel di Media Sosial" class="rounded-md mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-xl font-semibold text-[#A0522D] mb-2">Unggahan Paralel</h3>
+                        <p class="text-gray-600">Pada 3 Nov 2014, akun 'fufufafa' dan '@Chilli_Pari' (milik Gibran) mengunggah pertanyaan identik tentang "gunting steak".</p>
+                    </div>
+                    <div class="evidence-card bg-white p-6 rounded-lg shadow-lg cursor-pointer reveal-on-scroll" data-modal="modal2" style="animation-delay: 0.2s;">
+                        <img src="https://awsimages.detik.net.id/community/media/visual/2024/09/12/belakangan-masyarakat-ramai-membicarakan-akun-kaskus-bernama-fufufafa_169.jpeg?w=1200" alt="Kode Biner Peretasan" class="rounded-md mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-xl font-semibold text-[#A0522D] mb-2">Kebocoran Data</h3>
+                        <p class="text-gray-600">'Anonymous Indonesia' membocorkan NIK dan nomor telepon yang menghubungkan 'fufufafa' dengan Gibran.</p>
+                    </div>
+                    <div class="evidence-card bg-white p-6 rounded-lg shadow-lg cursor-pointer reveal-on-scroll" data-modal="modal3" style="animation-delay: 0.4s;">
+                        <img src="https://static.promediateknologi.id/crop/0x0:0x0/0x0/webp/photo/p2/84/2024/09/23/GYF6p0sa0AEmaCWa-1667735646.jpg" alt="Tampilan Aplikasi Finansial di Ponsel" class="rounded-md mb-4 w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x200/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-xl font-semibold text-[#A0522D] mb-2">Tautan Nomor Telepon</h3>
+                        <p class="text-gray-600">Nomor yang bocor terbukti sama dengan yang didaftarkan Gibran ke KPU dan terhubung ke akun finansial atas namanya.</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-200 my-16 reveal-on-scroll">
+
+            <section id="reaksi" class="scroll-mt-20">
+                <div class="text-center mb-12 reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3D3522]">Teater Politik: Tiga Babak Respons</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Skandal ini memicu manuver politik yang diperhitungkan dari para aktor utama, masing-masing dengan strategi untuk mengendalikan narasi.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 text-center">
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal-on-scroll">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Gibran_Rakabuming_2019.jpg/200px-Gibran_Rakabuming_2019.jpg" alt="Potret Gibran Rakabuming Raka" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#D2B48C] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-2xl font-semibold text-[#3D3522] mb-4">Gibran</h3>
+                        <p class="text-gray-500 italic mb-4">"Lha mbuh, takono sing duwe akun."</p>
+                        <p class="text-gray-700">Gibran memilih strategi penghindaran. "Bantahan non-bantahan" ini adalah jalan tengah yang aman, menghindari risiko kebohongan langsung maupun pengakuan yang merusak secara politik.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal-on-scroll" style="animation-delay: 0.2s;">
+                        <img src="https://mmc.tirto.id/image/otf/640x0/2024/10/21/antarafoto-presiden-berfoto-bersama-kabinet-menteri-merah-putih-211024-hma-2_ratio-16x9.jpg" alt="Kabinet Pemerintahan Indonesia" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#D2B48C] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-2xl font-semibold text-[#3D3522] mb-4">Pemerintah</h3>
+                        <p class="text-gray-500 italic mb-4">"Akun itu bukan milik Gibran."</p>
+                        <p class="text-gray-700">Kominfo bertindak sebagai pemadam kebakaran, mengeluarkan bantahan resmi untuk menahan kerusakan. Namun, kegagalan memberikan bukti alternatif membuat pernyataan ini terdengar hampa.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-lg shadow-lg reveal-on-scroll" style="animation-delay: 0.4s;">
+                        <img src="https://upload.wikimedia.org/wikipedia/id/thumb/6/61/Danjen_Kopassus_Prabowo_Subianto.jpg/250px-Danjen_Kopassus_Prabowo_Subianto.jpg" alt="Potret Prabowo Subianto" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-[#D2B48C] object-cover" onerror="this.onerror=null;this.src='https://placehold.co/150x150/e0e0e0/a0a0a0?text=Image+Error';">
+                        <h3 class="text-2xl font-semibold text-[#3D3522] mb-4">Prabowo</h3>
+                        <p class="text-gray-500 italic mb-4">"Tidak ambil pusing"</p>
+                        <p class="text-gray-700">Prabowo, korban utama serangan 'fufufafa', memilih pendekatan berbeda: diam. Keheningan ini bisa jadi merupakan langkah politik paling cerdas, membiarkan rakyat menarik kesimpulan sendiri.</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="border-gray-200 my-16 reveal-on-scroll">
+
+            <section id="dampak" class="scroll-mt-20">
+                <div class="text-center mb-12 reveal-on-scroll">
+                    <h2 class="text-3xl md:text-4xl font-bold text-[#3D3522]">Dampak: Krisis Kepercayaan yang Mengancam</h2>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto">Skandal 'fufufafa' bukan hanya tentang unggahan masa lalu, ini adalah ujian terhadap kredibilitas dan integritas pemerintahan baru Indonesia.</p>
+                </div>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-white p-8 rounded-lg shadow-lg mb-12 reveal-on-scroll">
+                        <h3 class="text-2xl font-semibold text-[#A0522D] mb-6">Analisis Sentimen Publik</h3>
+                        <div class="chart-container">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                        <p class="text-gray-600 mt-6">Berdasarkan analisis media sosial, 75% sentimen publik negatif terhadap kasus ini, menunjukkan krisis kepercayaan yang signifikan.</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+                        <div class="bg-white p-6 rounded-lg shadow-lg reveal-on-scroll">
+                            <h4 class="text-xl font-semibold text-[#A0522D] mb-4">Reputasi yang Ternoda</h4>
+                            <p class="text-gray-700">Skandal ini memberikan noda permanen pada Gibran dan ayahnya. Di era digital, masa lalu selalu dapat dibangkitkan kembali, dan kontroversi ini akan terus membayangi mereka.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-lg reveal-on-scroll" style="animation-delay: 0.2s;">
+                            <h4 class="text-xl font-semibold text-[#A0522D] mb-4">Legitimasi Dipertanyakan</h4>
+                            <p class="text-gray-700">Bagaimana mungkin seseorang yang tertangkap membuat komentar seksual vulgar dan serangan politik kotor dapat dipercaya memimpin kota terbesar ketiga di Indonesia?</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400 mb-4">© 2025 velocitysbeta - All right reserved</p>
+            <p class="text-sm text-gray-500">Disclaimer: Informasi ini menyajikan data yang tersedia untuk publik dari masyarakat</p>
+        </div>
+    </footer>
+
+    <div id="modal-container" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" style="opacity: 0;">
+        <div id="modal-content" class="bg-white rounded-2xl p-8 max-w-lg w-full shadow-2xl relative" style="opacity: 0;">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="js/main.js" defer></script>
+    <script src="js/charts.js" defer></script>
+</body>
+</html>
