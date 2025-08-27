@@ -1,4 +1,32 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Flip } from "gsap/Flip";
+import Lenis from 'lenis';
+
+gsap.registerPlugin(ScrollTrigger, Flip);
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Lenis Smooth Scrolling
+    const lenis = new Lenis({
+        lerp: 0.08, // Lower for a smoother, more 'buttery' feel
+        wheelMultiplier: 0.8,
+        gestureRecognizers: [
+            (e) => {
+                // prevent smooth scroll on modal content
+                if (e.target.closest('#modal-content')) {
+                    return false;
+                }
+            },
+        ],
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
     // --- Existing Functionality ---
     const tabs = document.querySelectorAll('.tab-button');
     const panes = document.querySelectorAll('.tab-pane');
@@ -12,59 +40,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const navLinks = document.querySelectorAll('.nav-link');
     const sections = document.querySelectorAll('section[id]');
 
-    // Tab functionality with press animation
+    // GSAP-powered Tab Functionality
     tabs.forEach(tab => {
-        // Add press animation on mousedown/touchstart
-        tab.addEventListener('mousedown', () => {
-            tab.classList.add('pressing');
-        });
-        
-        tab.addEventListener('mouseup', () => {
-            tab.classList.remove('pressing');
-        });
-        
-        tab.addEventListener('touchstart', () => {
-            tab.classList.add('pressing');
-        });
-        
-        tab.addEventListener('touchend', () => {
-            tab.classList.remove('pressing');
-        });
-        
         tab.addEventListener('click', () => {
             const targetId = tab.dataset.tab;
             const currentActivePane = document.querySelector('.tab-pane.active');
+            const targetPane = document.getElementById(targetId);
 
-            if (currentActivePane && currentActivePane.id === targetId) return;
+            if (currentActivePane === targetPane) return;
 
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
+            const tl = gsap.timeline({
+                defaults: { duration: 0.4, ease: 'power3.inOut' }
+            });
+
             if (currentActivePane) {
-                currentActivePane.classList.add('is-exiting');
-                currentActivePane.classList.remove('active');
-            }
-
-            const targetPane = document.getElementById(targetId);
-            targetPane.classList.remove('hidden');
-            targetPane.classList.add('active');
-
-            setTimeout(() => {
-                if(currentActivePane) {
-                   currentActivePane.classList.remove('is-exiting');
-                }
-                panes.forEach(p => {
-                    if (p.id !== targetId) {
-                        p.classList.remove('active');
+                // Animate out the current pane
+                tl.to(currentActivePane, {
+                    x: -30,
+                    opacity: 0,
+                    onComplete: () => {
+                        currentActivePane.classList.remove('active');
+                        currentActivePane.classList.add('hidden');
                     }
                 });
-            }, 500);
+            }
+
+            // Animate in the new pane
+            targetPane.classList.remove('hidden');
+            gsap.set(targetPane, { x: 30, opacity: 0 }); // Set initial state
+
+            tl.to(targetPane, {
+                x: 0,
+                opacity: 1,
+                onStart: () => {
+                    targetPane.classList.add('active');
+                }
+            }, currentActivePane ? "-=0.2" : 0); // Overlap animations slightly
         });
     });
 
-    // Modal functionality
+    // GSAP Flip-based Modal Animation
     let activeModalOrigin = null;
-
     const modalData = {
         modal1: {
             title: "Koneksi 'Chilli Pari'",
@@ -85,47 +104,46 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!data) return;
 
         activeModalOrigin = originCard;
-        const cardRect = originCard.getBoundingClientRect();
-        const modalRect = modalContent.getBoundingClientRect();
+        const state = Flip.getState(originCard);
 
-        const scaleX = cardRect.width / modalRect.width;
-        const scaleY = cardRect.height / modalRect.height;
-        const translateX = cardRect.left - modalRect.left;
-        const translateY = cardRect.top - modalRect.top;
-
-        modalContent.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        modalContent.style.opacity = '0';
-
-        modalBody.innerHTML = `<h3 class="text-2xl font-bold text-[#A0522D] mb-4">${data.title}</h3><p class="text-gray-700">${data.content}</p>`;
+        modalBody.innerHTML = `<h3 class="text-fluid-h3 font-semibold text-[#A0522D] mb-4">${data.title}</h3><p class="text-fluid-body text-gray-700">${data.content}</p>`;
         modalContainer.classList.remove('hidden');
         modalContainer.classList.add('flex');
+        modalContent.style.opacity = 1; // Make it visible for the FLIP animation
 
-        requestAnimationFrame(() => {
-            modalContainer.style.opacity = '1';
-            modalContent.style.transform = 'translate(0, 0) scale(1)';
-            modalContent.style.opacity = '1';
+        originCard.style.opacity = 0; // Hide original card
+
+        Flip.from(state, {
+            target: modalContent,
+            duration: 0.6,
+            ease: "power4.inOut",
+            scale: true,
+            onStart: () => {
+                gsap.to(modalContainer, { opacity: 1, duration: 0.4 });
+            },
         });
     };
 
     const closeModal = () => {
         if (!activeModalOrigin) return;
 
-        const cardRect = activeModalOrigin.getBoundingClientRect();
-        const modalRect = modalContent.getBoundingClientRect();
+        const state = Flip.getState(modalContent);
 
-        const scaleX = cardRect.width / modalRect.width;
-        const scaleY = cardRect.height / modalRect.height;
-        const translateX = cardRect.left - modalRect.left;
-        const translateY = cardRect.top - modalRect.top;
-
-        modalContainer.style.opacity = '0';
-        modalContent.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-        modalContent.style.opacity = '0';
-
-        setTimeout(() => {
-            modalContainer.classList.add('hidden');
-            activeModalOrigin = null;
-        }, 400);
+        Flip.from(state, {
+            target: activeModalOrigin,
+            duration: 0.6,
+            ease: "power4.inOut",
+            scale: true,
+            onStart: () => {
+                gsap.to(modalContainer, { opacity: 0, duration: 0.4 });
+            },
+            onComplete: () => {
+                modalContainer.classList.add('hidden');
+                modalContent.style.opacity = 0;
+                activeModalOrigin.style.opacity = 1;
+                activeModalOrigin = null;
+            }
+        });
     };
 
     evidenceCards.forEach(card => card.addEventListener('click', () => openModal(card.dataset.modal, card)));
@@ -156,45 +174,45 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Smooth scroll navigation
+    // Lenis-powered Smooth Scroll & Scrollspy
+    const header = document.querySelector('header');
+    const headerOffset = header ? header.offsetHeight : 80;
+
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('data-scroll-to');
             const targetElement = document.getElementById(targetId);
             if (targetElement) {
-                const offset = document.querySelector('header').offsetHeight;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
-                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                lenis.scrollTo(targetElement, { offset: -headerOffset });
             }
-            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
+            if (mobileMenu && mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                menuBtn.classList.remove('open');
+                document.body.classList.remove('menu-open');
             }
         });
     });
 
-    // Active link highlighting on scroll
-    window.addEventListener('scroll', () => {
+    lenis.on('scroll', (e) => {
         let current = '';
-        const headerOffset = document.querySelector('header').offsetHeight + 20;
         sections.forEach(section => {
-            if (pageYOffset >= section.offsetTop - headerOffset) {
+            const sectionTop = section.offsetTop - headerOffset - 50; // 50px buffer
+            if (e.scroll >= sectionTop) {
                 current = section.getAttribute('id');
             }
         });
+
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.dataset.scrollTo === current) {
                 link.classList.add('active');
             }
         });
-        // Move pill on scroll
+
         const activeLink = document.querySelector('.nav-link.active');
         if (activeLink) moveNavPill(activeLink);
     });
-
-    // --- NEW: Component-Specific Enhancements ---
 
     // Navigation Pill
     const navPill = document.getElementById('nav-pill');
@@ -231,23 +249,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- NEW: Core Interactivity & Animations ---
 
-    // 1. Scroll-based Reveal Animations
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-            }
+    // 1. GSAP Scroll-based Reveal Animations
+    gsap.utils.toArray('.reveal-on-scroll').forEach(elem => {
+        gsap.from(elem, {
+            scrollTrigger: {
+                trigger: elem,
+                start: 'top 85%',
+                end: 'bottom 20%',
+                toggleActions: 'play none none none',
+            },
+            opacity: 0,
+            y: 40,
+            duration: 1,
+            ease: 'power4.out',
         });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => revealObserver.observe(el));
+    });
 
-    // 2. Hero Parallax Effect
-    const heroSection = document.querySelector('.hero-section');
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        heroSection.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+    // Staggered animation for evidence cards (they are also reveal-on-scroll, but we give them a special animation)
+    gsap.from(".evidence-card", {
+        scrollTrigger: {
+            trigger: "#jejak", // The container for the cards
+            start: "top 75%",
+        },
+        duration: 0.8,
+        opacity: 0,
+        y: 50,
+        stagger: 0.15,
+        ease: "power4.out"
+    });
+
+    // 2. GSAP Hero Parallax Effect
+    gsap.to(".hero-section", {
+        scrollTrigger: {
+            trigger: ".hero-section",
+            start: "top top",
+            end: "bottom top",
+            scrub: true
+        },
+        backgroundPositionY: "30%",
+        ease: "none"
     });
 
     // 3. 3D Card Tilt Effect
@@ -271,8 +311,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            glare.style.background = 'none';
+            gsap.to(card, {
+                duration: 0.8,
+                transform: 'perspective(1000px) rotateX(0) rotateY(0) scale(1)',
+                ease: 'elastic.out(1, 0.75)'
+            });
+            gsap.to(glare, {
+                background: 'none',
+                duration: 0.8
+            })
         });
     });
 
