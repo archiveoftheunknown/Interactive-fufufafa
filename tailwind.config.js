@@ -74,6 +74,13 @@ export default {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontSize: {
+        'fluid-h1': 'clamp(2rem, 5vw + 1rem, 4rem)',      // 32px -> 64px
+        'fluid-h2': 'clamp(1.75rem, 4vw + 1rem, 3rem)',    // 28px -> 48px
+        'fluid-h3': 'clamp(1.5rem, 2vw + 1rem, 2rem)',      // 24px -> 32px
+        'fluid-body': 'clamp(1.0625rem, 1vw + 0.75rem, 1.125rem)', // 17px -> 18px
+        'fluid-sm': 'clamp(0.875rem, 1vw + 0.5rem, 1rem)', // 14px -> 16px
+      },
     },
   },
   plugins: [],
